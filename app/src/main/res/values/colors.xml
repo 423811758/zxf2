@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="light_gray">#F0F0F0</color>
+    <color name="dark_gray">#A0A0A0</color>
+    <color name="dark_black">#000000</color>
+    <color name="gray">#cccccc</color>
+    <color name="orange">#ff6c00</color>
+    <color name="cor_body_bg">#f7f7f7</color>
+    <color name="cor_register">#8C8C8C</color>
+    <color name="cor_selected">#FFA200</color>
+    <color name="cor_red">#ff0033</color>
+    <color name="text_black">#ff8c8c8c</color>
+    <color name="text_orange">#ffff6c00</color>
+    <color name="text_blue">#0066ff</color>
+    <!-- hint 提示文字颜色 -->
+    <color name="hint">#cccccc</color>
+    <!-- app背景颜色 -->
+    <color name="background_color">#ffffff</color>
+
+    <color name="background_color_gray">#e6e6e6</color>
+
+    <color name="transparent">#00ffffff</color>
+</resources>
