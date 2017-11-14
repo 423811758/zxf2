@@ -21,8 +21,12 @@ import com.wzd.wolf_open_resource.util.Log4JUtil;
 import com.wzd.zxf.MainActivity;
 import com.wzd.zxf.MyWidgetProvider;
 import com.wzd.zxf.R;
+import com.wzd.zxf.http.FinanceApi;
 import com.wzd.zxf.tools.DateUtil;
 import com.wzd.zxf.tools.SPUtil;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import okhttp3.Call;
 
 import static com.pgyersdk.update.UpdateManagerListener.getAppBeanFromString;
 
@@ -58,6 +62,7 @@ public class TimeFragment extends BaseFragment implements View.OnClickListener {
 	private Button mSaveBtn;
 	private Button mUpdateBtn;
 	private Button mRestartBtn;
+	private TextView mResultTv;
 	private String mBirthdayStr = "1989-12-23";
 	private int mAge;
 	
@@ -68,6 +73,7 @@ public class TimeFragment extends BaseFragment implements View.OnClickListener {
 		mSaveBtn = (Button) findViewById(R.id.save_btn);
 		mUpdateBtn = (Button) findViewById(R.id.update_btn);
 		mRestartBtn = (Button) findViewById(R.id.restart_btn);
+		mResultTv = (TextView) findViewById(R.id.result_tv);
 
 		mSaveBtn.setOnClickListener(this);
 		mUpdateBtn.setOnClickListener(this);
@@ -104,6 +110,17 @@ public class TimeFragment extends BaseFragment implements View.OnClickListener {
 	}
 
 	private void restart() {
+		FinanceApi.getInfo(new StringCallback() {
+			@Override
+			public void onError(Call call, Exception e, int i) {
+				mResultTv.setText("失败");
+			}
+
+			@Override
+			public void onResponse(String s, int i) {
+				mResultTv.setText(s);
+			}
+		});
 	}
 
 	private void update() {

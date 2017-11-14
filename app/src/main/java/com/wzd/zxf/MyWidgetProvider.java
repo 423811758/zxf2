@@ -32,28 +32,29 @@ public class MyWidgetProvider extends AppWidgetProvider {
         super.onEnabled(context);
 
         //在插件被创建的时候这里会被调用， 所以我们在这里开启一个timer 每秒执行一次
-        MyTask mMyTask = new MyTask(context);
-        myTimer = new Timer();
-        myTimer.schedule(mMyTask, 1000, 1000);
+//        MyTask mMyTask = new MyTask(context);
+//        myTimer = new Timer();
+//        myTimer.schedule(mMyTask, 1000, 1000);
+        context.startService(MyService.getIntent(context));
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent.getAction().equals(UPDATE_WIDGET_ACTION))
-        {
-            mOldTime = intent.getLongExtra("OLD_TIME", 0);
-            if(mOldTime <= 0){
-                mOldTime = Long.parseLong(String.valueOf(SPUtil.get(context, TimeFragment.OLD_DATE, 1L)));
-            }
-            long lastDate = mOldTime - System.currentTimeMillis();
-            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-            rv.setTextViewText(R.id.widget_tv, DateUtil.getLastDate(Integer.parseInt(String.valueOf(lastDate/1000))));
-
-            //将该界面显示到插件中
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            ComponentName componentName = new ComponentName(context,MyWidgetProvider.class);
-            appWidgetManager.updateAppWidget(componentName, rv);
-        }
+//        if(intent.getAction().equals(UPDATE_WIDGET_ACTION))
+//        {
+//            mOldTime = intent.getLongExtra("OLD_TIME", 0);
+//            if(mOldTime <= 0){
+//                mOldTime = Long.parseLong(String.valueOf(SPUtil.get(context, TimeFragment.OLD_DATE, 1L)));
+//            }
+//            long lastDate = mOldTime - System.currentTimeMillis();
+//            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+//            rv.setTextViewText(R.id.widget_tv, DateUtil.getLastDate(Integer.parseInt(String.valueOf(lastDate/1000))));
+//
+//            //将该界面显示到插件中
+//            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+//            ComponentName componentName = new ComponentName(context,MyWidgetProvider.class);
+//            appWidgetManager.updateAppWidget(componentName, rv);
+//        }
         super.onReceive(context, intent);
     }
 
