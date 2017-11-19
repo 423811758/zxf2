@@ -18,6 +18,7 @@ import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.wzd.wolf_open_resource.app.CoreActivity;
+import com.wzd.zxf.fragment.FundFragment;
 import com.wzd.zxf.fragment.MyFragment;
 import com.wzd.zxf.fragment.PlanFragment;
 import com.wzd.zxf.fragment.SettingFragment;
@@ -76,7 +77,7 @@ public class MainActivity extends CoreActivity implements View.OnClickListener {
 
     private Fragment createFragment(int index) {
         if (index == 0) {
-            return MyFragment.getInstance();
+            return FundFragment.getInstance();
         } else if (index == 1) {
             return PlanFragment.getInstance();
         } else if (index == 2) {
@@ -118,7 +119,7 @@ public class MainActivity extends CoreActivity implements View.OnClickListener {
     }
 
     private void clearFragment() {
-        MyFragment.clear();
+        FundFragment.clear();
         PlanFragment.clear();
         TimeFragment.clear();
         SettingFragment.clear();

@@ -1,7 +1,9 @@
 package com.wzd.zxf.fragment;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,15 +19,25 @@ import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.wzd.wolf_open_resource.app.BaseFragment;
+import com.wzd.wolf_open_resource.util.JsonUtil;
 import com.wzd.wolf_open_resource.util.Log4JUtil;
 import com.wzd.zxf.MainActivity;
 import com.wzd.zxf.MyWidgetProvider;
 import com.wzd.zxf.R;
+import com.wzd.zxf.broadcast.FundReceiver;
 import com.wzd.zxf.http.FinanceApi;
+import com.wzd.zxf.model.Fund;
 import com.wzd.zxf.tools.DateUtil;
 import com.wzd.zxf.tools.SPUtil;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import okhttp3.Call;
 
 import static com.pgyersdk.update.UpdateManagerListener.getAppBeanFromString;
@@ -62,6 +74,7 @@ public class TimeFragment extends BaseFragment implements View.OnClickListener {
 	private Button mSaveBtn;
 	private Button mUpdateBtn;
 	private Button mRestartBtn;
+	private Button mFundAlarmBtn;
 	private TextView mResultTv;
 	private String mBirthdayStr = "1989-12-23";
 	private int mAge;
@@ -74,10 +87,12 @@ public class TimeFragment extends BaseFragment implements View.OnClickListener {
 		mUpdateBtn = (Button) findViewById(R.id.update_btn);
 		mRestartBtn = (Button) findViewById(R.id.restart_btn);
 		mResultTv = (TextView) findViewById(R.id.result_tv);
+		mFundAlarmBtn = (Button) findViewById(R.id.fund_alarm_btn);
 
 		mSaveBtn.setOnClickListener(this);
 		mUpdateBtn.setOnClickListener(this);
 		mRestartBtn.setOnClickListener(this);
+		mFundAlarmBtn.setOnClickListener(this);
 	}
 
 	@Override
@@ -104,23 +119,59 @@ public class TimeFragment extends BaseFragment implements View.OnClickListener {
 			case R.id.restart_btn:
 				restart();
 				break;
+			case R.id.fund_alarm_btn:
+				try {
+					setFundAlarm();
+				} catch (Exception e) {
+
+				}
+				break;
 			default:
 				break;
 		}
 	}
 
-	private void restart() {
-		FinanceApi.getInfo(new StringCallback() {
-			@Override
-			public void onError(Call call, Exception e, int i) {
-				mResultTv.setText("失败");
-			}
+	private void setFundAlarm() throws ParseException {
+		Intent intent = new Intent(FundReceiver.ACTION_FUND_RECEIVER);
+		intent.putExtra("msg", "fund alarm");
+		PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+		AlarmManager am = (AlarmManager) mActivity.getSystemService(mActivity.ALARM_SERVICE);
+		long startTime = DateUtil.parseDatetime((DateUtil.getDay(System.currentTimeMillis())+ " 14:30:00"), DateUtil.FORMAT).getTime();
+		Log4JUtil.info(DateUtil.getMillon(startTime));
+		am.setRepeating(AlarmManager.RTC, startTime, 24 * 60 * 60 * 1000, pi);
+	}
 
-			@Override
-			public void onResponse(String s, int i) {
-				mResultTv.setText(s);
-			}
-		});
+	private void restart() {
+//		Fund fund = new Fund();
+//		List<String> values = new ArrayList<>();
+//		values.add("001186");
+//		fund.findByKey("fundcode", values, new FindListener<Fund>() {
+//			@Override
+//			public void done(List<Fund> list, BmobException e) {
+//				if(list != null && list.size() > 0) {
+//					mResultTv.setText(list.get(0).getName());
+//				}
+//			}
+//		});
+//		FinanceApi.getInfo("001986", new StringCallback() {
+//			@Override
+//			public void onError(Call call, Exception e, int i) {
+//				mResultTv.setText("失败");
+//			}
+//
+//			@Override
+//			public void onResponse(String s, int i) {
+//				s = s.replace("jsonpgz(", "");
+//				s = s.replace(");", "");
+//				try {
+//					Fund fund = (Fund) JsonUtil.json2Bean(s, Fund.class);
+//					fund.saveData();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				mResultTv.setText(s);
+//			}
+//		});
 	}
 
 	private void update() {

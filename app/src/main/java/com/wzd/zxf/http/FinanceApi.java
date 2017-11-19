@@ -13,7 +13,7 @@ import okhttp3.HttpUrl;
 
 public class FinanceApi extends BaseApi {
 
-    public static void getInfo(StringCallback callback) {
-        OkHttpUtils.get().url(URL_FINANCE_API).build().execute(callback);
+    public static void getInfo(String fundcode, StringCallback callback) {
+        OkHttpUtils.get().url(getFundUrl(fundcode)).build().execute(callback);
     }
 }

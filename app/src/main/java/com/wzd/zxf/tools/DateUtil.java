@@ -13,7 +13,7 @@ import java.util.Locale;
  */
 
 public class DateUtil {
-    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -116,7 +116,7 @@ public class DateUtil {
      * @return
      */
     public static String getMillon(long time) {
-        return new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(time);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
 
     }
 

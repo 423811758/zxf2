@@ -2,17 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wzd.zxf">
 
-    <!-- 必选-->
+    <!-- 必选 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 获取网络状态 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络通信-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />  <!-- 获取设备信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取MAC地址-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络通信 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 获取设备信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取MAC地址 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写sdcard，storage等等 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 允许程序录制音频 -->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <!-- 可选-->
-    <uses-permission android:name="android.permission.READ_LOGS" /> <!-- 获取logcat日志 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 可选 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
+    <!-- 获取logcat日志 -->
     <application
         android:name=".service.MyApplication"
         android:allowBackup="true"
@@ -27,34 +29,48 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MyWidgetProvider" >
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info"></meta-data>
+
+        <receiver android:name=".MyWidgetProvider">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info" />
+
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="com.wzd.zxf.action.appWidgetUpdate"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.wzd.zxf.action.appWidgetUpdate" />
             </intent-filter>
         </receiver>
+
         <service android:name=".MyService">
             <intent-filter>
-                <action android:name="com.wzd.zxf.action.myService"/>
+                <action android:name="com.wzd.zxf.action.myService" />
             </intent-filter>
         </service>
 
-        <!--蒲公英-->
-        <!-- 必选-->
+        <!-- 蒲公英 -->
+        <!-- 必选 -->
         <meta-data
             android:name="PGYER_APPID"
-            android:value="84ab7ee3c479e641564e6adfe5021fc8" >
-        </meta-data>
-        <provider android:name="android.support.v4.content.FileProvider"
+            android:value="84ab7ee3c479e641564e6adfe5021fc8"></meta-data>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
             android:authorities="com.wzd.zxf.pgyprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
+
+        <receiver
+            android:name=".broadcast.FundReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.wzd.zxf.broadcast.FundReceiver"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
