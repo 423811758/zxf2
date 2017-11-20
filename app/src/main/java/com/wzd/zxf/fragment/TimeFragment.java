@@ -138,7 +138,7 @@ public class TimeFragment extends BaseFragment implements View.OnClickListener {
 		AlarmManager am = (AlarmManager) mActivity.getSystemService(mActivity.ALARM_SERVICE);
 		long startTime = DateUtil.parseDatetime((DateUtil.getDay(System.currentTimeMillis())+ " 14:30:00"), DateUtil.FORMAT).getTime();
 		Log4JUtil.info(DateUtil.getMillon(startTime));
-		am.setRepeating(AlarmManager.RTC, startTime, 24 * 60 * 60 * 1000, pi);
+		am.setRepeating(AlarmManager.RTC_WAKEUP, startTime, 24 * 60 * 60 * 1000, pi);
 	}
 
 	private void restart() {

@@ -9,6 +9,7 @@ import com.wzd.wolf_open_resource.util.Log4JUtil;
 import com.wzd.zxf.http.Callback.FundCallBack;
 import com.wzd.zxf.http.FinanceApi;
 import com.wzd.zxf.model.Fund;
+import com.wzd.zxf.tools.DateUtil;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class FundReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (ACTION_FUND_RECEIVER.equals(intent.getAction())) {
+            Log4JUtil.info("FundReceiver:: "+DateUtil.getMillon(System.currentTimeMillis()));
             getCurrentFundData();
         }
     }
